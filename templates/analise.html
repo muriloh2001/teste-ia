@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise por Subgrupo e Seção</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f0f0f0; }
+        h2, h3, h4 { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h2>📦 Análise por Subgrupo e Seção</h2>
+    <form method="POST">
+        <label for="subgrupo">Subgrupo:</label>
+        <select id="subgrupo" name="subgrupo">
+            <option value="">-- Selecione o subgrupo --</option>
+            {% for sg in subgrupos %}
+                <option value="{{ sg }}" {% if filtro_subgrupo == sg %}selected{% endif %}>{{ sg }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="secao">Seção:</label>
+        <select id="secao" name="secao">
+            <option value="">-- Selecione a seção --</option>
+            {% for s in secoes %}
+                <option value="{{ s }}" {% if filtro_secao == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Analisar</button>
+    </form>
+
+    {% if filtro_subgrupo or filtro_secao %}
+        <h3>Filtro aplicado:
+            {% if filtro_subgrupo %}Subgrupo: {{ filtro_subgrupo }}{% endif %}
+            {% if filtro_subgrupo and filtro_secao %} e {% endif %}
+            {% if filtro_secao %}Seção: {{ filtro_secao }}{% endif %}
+        </h3>
+
+        <p>Total de itens: {{ total }}</p>
+
+        <h4>Distribuição por loja:</h4>
+        <ul>
+            {% for loja, qtd in distribuicao.items() %}
+                <li>Loja {{ loja }}: {{ qtd }} itens</li>
+            {% endfor %}
+        </ul>
+
+        {% if sugestao %}
+            <h4>📍 Base de Redistribuição</h4>
+            <p><strong>Total de faltas identificadas:</strong> {{ sugestao.faltando.total }}</p>
+
+            <h4>🔄 Sugestões de Redistribuição</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cor</th>
+                        <th>Tamanho</th>
+                        <th>De (Loja Origem)</th>
+                        <th>Para (Loja Destino)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in sugestao.reposicoes %}
+                        <tr>
+                            <td>{{ item.cor }}</td>
+                            <td>{{ item.tamanho }}</td>
+                            <td>{{ item.loja_origem }}</td>
+                            <td>{{ item.loja_destino }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

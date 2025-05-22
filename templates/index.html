@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificador de Cores</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 30px; background: #f5f5f5; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
+        input[type="text"] { width: 100%; padding: 10px; margin-top: 10px; }
+        input[type="submit"] { margin-top: 10px; padding: 10px 20px; }
+        .resultado { margin-top: 20px; padding: 10px; background: #eef; border-left: 4px solid #77f; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🔍 Classificador de Cores</h2>
+        <form method="POST">
+            <label for="cor">Digite uma cor:</label>
+            <input type="text" name="cor" required>
+            <input type="submit" value="Classificar">
+        </form>
+
+        {% if resultado %}
+        <div class="resultado">
+            <p><strong>Cor digitada:</strong> {{ resultado.cor_digitada }}</p>
+            <p><strong>Cor normalizada:</strong> {{ resultado.cor_normalizada }}</p>
+            <p><strong>Grupo:</strong> {{ resultado.grupo }}</p>
+            <p><strong>Cor pai:</strong> {{ resultado.cor_pai }}</p>
+        </div>
+        {% endif %}
+
+        <h3>📊 Visualização dos Clusters</h3>
+        <img src="{{ url_for('static', filename='visualizacao_clusters.png') }}" alt="Clusters" width="100%">
+    </div>
+</body>
+</html>
