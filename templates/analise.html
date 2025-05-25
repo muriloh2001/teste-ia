@@ -42,11 +42,11 @@
         <p>Total de itens: {{ total }}</p>
 
         <h4>Distribuição por loja:</h4>
-        <ul>
-            {% for loja, qtd in distribuicao.items() %}
-                <li>Loja {{ loja }}: {{ qtd }} itens</li>
-            {% endfor %}
-        </ul>
+           <ul>
+    {% for loja, qtd in distribuicao.items() %}
+        <li><a href="/loja/{{ loja }}">Loja {{ loja }}</a>: {{ qtd }} itens</li>
+    {% endfor %}
+    </ul>
 
         {% if sugestao %}
             <h4>📍 Base de Redistribuição</h4>
