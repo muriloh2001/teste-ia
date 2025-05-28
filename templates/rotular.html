@@ -1,0 +1,12 @@
+<h2 class="text-xl font-bold mb-4">Rotular Cor</h2>
+<form method="post" class="space-y-4">
+    <label for="cor">Cor não rotulada:</label>
+    <select name="cor" class="border p-2 rounded w-full">
+        {% for cor in cores %}
+            <option value="{{ cor }}">{{ cor }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="text" name="cor_pai" placeholder="Digite a cor pai correta" class="border p-2 w-full rounded">
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
+</form>

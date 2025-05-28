@@ -42,37 +42,43 @@
         <p>Total de itens: {{ total }}</p>
 
         <h4>Distribuição por loja:</h4>
-           <ul>
-    {% for loja, qtd in distribuicao.items() %}
-        <li><a href="/loja/{{ loja }}">Loja {{ loja }}</a>: {{ qtd }} itens</li>
-    {% endfor %}
-    </ul>
+        <ul>
+            {% for loja, qtd in distribuicao.items() %}
+                <li><a href="/loja/{{ loja }}">Loja {{ loja }}</a>: {{ qtd }} itens</li>
+            {% endfor %}
+        </ul>
 
         {% if sugestao %}
-            <h4>📍 Base de Redistribuição</h4>
-            <p><strong>Total de faltas identificadas:</strong> {{ sugestao.faltando.total }}</p>
-
             <h4>🔄 Sugestões de Redistribuição</h4>
             <table>
-                <thead>
-                    <tr>
-                        <th>Cor</th>
-                        <th>Tamanho</th>
-                        <th>De (Loja Origem)</th>
-                        <th>Para (Loja Destino)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in sugestao.reposicoes %}
-                        <tr>
-                            <td>{{ item.cor }}</td>
-                            <td>{{ item.tamanho }}</td>
-                            <td>{{ item.loja_origem }}</td>
-                            <td>{{ item.loja_destino }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>Cor</th>
+            <th>Tamanho</th>
+            <th>Loja Origem</th>
+            <th>Endereço Origem</th>
+            <th>Loja Destino</th>
+            <th>Endereço Destino</th>
+            <th>Distância</th>
+            <th>Tempo</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in sugestao.reposicoes %}
+        <tr>
+            <td>{{ item.cor }}</td>
+            <td>{{ item.tamanho }}</td>
+            <td>{{ item.loja_origem }}</td>
+            <td><a href="{{ item.endereco_origem }}" target="_blank">Ver mapa</a></td>
+            <td>{{ item.loja_destino }}</td>
+            <td><a href="{{ item.endereco_destino }}" target="_blank">Ver mapa</a></td>
+            <td>{{ item.distancia_km ~ ' km' if item.distancia_km is not none else '?' }}</td>
+            <td>{{ item.tempo_min ~ ' min' if item.tempo_min is not none else '?' }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
         {% endif %}
     {% endif %}
 </body>
